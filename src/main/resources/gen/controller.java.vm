@@ -1,0 +1,79 @@
+package ${package.Controller};
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import org.springframework.web.bind.annotation.*;
+import com.dragon.common.web.controller.BaseController;
+import com.dragon.common.web.page.TableDataInfo;
+
+import javax.annotation.Resource;
+
+import java.util.List;
+#if(${swagger2})
+import io.swagger.annotations.ApiOperation;
+#end
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ *
+ * $!{table.comment} 前端控制器
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${swagger2})
+@Api(value = ${entity})
+#end
+@RestController
+@Api(value = "${table.comment}")
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+public class ${table.controllerName} extends BaseController{
+    @Resource
+    private ${table.serviceName} ${table.entityPath}Service;
+
+    @PostMapping("/list")
+    @ApiOperation(value = "${table.comment}列表条件查询")
+    public TableDataInfo list(@ResponseBody ${entity} ${table.entityPath}){
+            startPage();
+            return getDataTable(${table.entityPath}Service.selectList(${table.entityPath}));
+    }
+
+    @PostMapping("/listAll")
+    @ApiOperation(value = "${table.comment}列表查询全部")
+    public TableDataInfo listAll(){
+            return getDataTable(${table.entityPath}Service.selectList());
+    }
+
+    @GetMapping
+    @ApiOperation(value = "${table.comment}查看详情", notes = "${entity}")
+    public ${entity} get${entity}ById(Long id){
+            return ${table.entityPath}Service.selectById(id);
+    }
+
+    @PostMapping
+    @ApiOperation(value = "${table.comment}新增", notes = "${entity}")
+    public boolean save${entity}(@ResponseBody ${entity} ${table.entityPath}){
+            return ${table.entityPath}Service.insert(${table.entityPath});
+    }
+
+    @PutMapping
+    @ApiOperation(value = "${table.comment}修改", notes = "${entity}")
+    public boolean update(@ResponseBody ${entity} ${table.entityPath}){
+            return ${table.entityPath}Service.update(${table.entityPath});
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "${table.comment}删除", notes = "${entity}")
+    public boolean remove(@PathVariable  Long id){
+            return ${table.entityPath}Service.deleteById(id);
+    }
+
+}
+#end

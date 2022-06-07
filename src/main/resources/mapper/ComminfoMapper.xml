@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dragon.project.employee.mapper.ComminfoMapper">
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+            itemNo, itemName, brand, model, salePrice
+    </sql>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="resultMap" type="com.dragon.project.employee.entity.Comminfo">
+        <result column="itemNo" property="itemNo"/>
+        <result column="itemName" property="itemName"/>
+        <result column="brand" property="brand"/>
+        <result column="model" property="model"/>
+        <result column="salePrice" property="salePrice"/>
+    </resultMap>
+
+    <select id="selectList" resultMap="resultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from comminfo
+    </select>
+
+</mapper>

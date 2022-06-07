@@ -1,0 +1,13 @@
+package ${package.Mapper};
+
+import ${package.Entity}.${entity};
+import ${superMapperClassPackage};
+import com.jkx.chongshoumicropink.web.mapper.BaseEntityMapper;
+/**
+ * @auther ${author}
+ * @create ${date}
+ * @describe $!{table.comment}mapper类
+ */
+public interface ${table.mapperName} extends BaseEntityMapper<${entity}> {
+
+}
